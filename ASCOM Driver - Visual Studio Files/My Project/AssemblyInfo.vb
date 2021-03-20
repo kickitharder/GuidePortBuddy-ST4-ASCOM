@@ -12,13 +12,13 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("ASCOM Telescope driver for GuidePortBuddy")>
 <Assembly: AssemblyCompany("ASCOM Initiative")>
 <Assembly: AssemblyProduct("ASCOM Telescope driver for GuidePortBuddy")>
-<Assembly: AssemblyCopyright("Copyright © 2020, The ASCOM Intiative")>
+<Assembly: AssemblyCopyright("Copyright © 2021, The ASCOM Intiative")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(True)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("2e2181ad-deec-4c57-a033-9759f5e96c35")>
+<Assembly: Guid("ab055370-d9e0-48ab-9cdd-8473dae3f586")>
 
 ' Version information for an assembly consists of the following four values:
 '

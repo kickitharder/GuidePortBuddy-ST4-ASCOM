@@ -31,12 +31,6 @@
 ' This definition is used to select code that's only applicable for one device type
 #Const Device = "Telescope"
 
-Imports ASCOM
-Imports ASCOM.Astrometry
-Imports ASCOM.Astrometry.AstroUtils
-Imports ASCOM.DeviceInterface
-Imports ASCOM.Utilities
-
 Imports System
 Imports System.Collections
 Imports System.Collections.Generic
@@ -44,8 +38,13 @@ Imports System.Globalization
 Imports System.IO.Ports
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports ASCOM
+Imports ASCOM.Astrometry
+Imports ASCOM.Astrometry.AstroUtils
+Imports ASCOM.DeviceInterface
+Imports ASCOM.Utilities
 
-<Guid("0c402d6f-a177-4f13-ba83-8f2c1efb27a7")>
+<Guid("33147a4f-7743-496b-b103-9b86d82a5d94")>
 <ClassInterface(ClassInterfaceType.None)>
 Public Class Telescope
 
@@ -62,7 +61,7 @@ Public Class Telescope
     ' Driver ID and descriptive string that shows in the Chooser
     '
     Friend Shared driverID As String = "ASCOM.GuidePortBuddy.Telescope"
-    Private Shared driverDescription As String = "GuidePortBuddy"
+    Private Shared driverDescription As String = "GuidePortBuddy Telescope"
 
     Friend Shared comPortProfileName As String = "COM Port" 'Constants used for Profile persistence
     Friend Shared traceStateProfileName As String = "Trace Level"
@@ -177,8 +176,8 @@ Public Class Telescope
                     connectedState = True
                 End If
             Else
-                    connectedState = False
-                    TL.LogMessage("Connected Set", "Disconnecting from port " + comPort)
+                connectedState = False
+                TL.LogMessage("Connected Set", "Disconnecting from port " + comPort)
                 ' TODO disconnect from the device
                 serialCommand("X")      'Cancels any active guide pulses
             End If
@@ -199,7 +198,7 @@ Public Class Telescope
         Get
             Dim m_version As Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
             ' TODO customise this driver description
-            Dim s_driverInfo As String = "Version: " + m_version.Major.ToString() + "." + m_version.Minor.ToString()
+            Dim s_driverInfo As String = "Information about the driver itself. Version: " + m_version.Major.ToString() + "." + m_version.Minor.ToString()
             TL.LogMessage("DriverInfo Get", s_driverInfo)
             Return s_driverInfo
         End Get
@@ -326,14 +325,14 @@ Public Class Telescope
 
     Public ReadOnly Property CanPark() As Boolean Implements ITelescopeV3.CanPark
         Get
-            TL.LogMessage("CanPark", "Get - " & True.ToString())
-            Return True
+            TL.LogMessage("CanPark", "Get - " & False.ToString())
+            Return False
         End Get
     End Property
 
     Public ReadOnly Property CanPulseGuide() As Boolean Implements ITelescopeV3.CanPulseGuide
         Get
-            TL.LogMessage("CanPulseGuide", "Get - " & True.ToString())
+            TL.LogMessage("CanPulseGuide", "Get - " & False.ToString())
             Return True
         End Get
     End Property
@@ -424,8 +423,8 @@ Public Class Telescope
 
     Public ReadOnly Property CanUnpark() As Boolean Implements ITelescopeV3.CanUnpark
         Get
-            TL.LogMessage("CanUnpark", "Get - " & True.ToString())
-            Return True
+            TL.LogMessage("CanUnpark", "Get - " & False.ToString())
+            Return False
         End Get
     End Property
 
@@ -854,6 +853,7 @@ Public Class Telescope
         End Using
 
     End Sub
+
     Private Function serialCommand(cmdStr As String) As String
         Dim retStr As String = ""
         Dim objSerial As New SerialPort
@@ -871,11 +871,11 @@ Public Class Telescope
             retStr = "Error"
         End Try
         Try
-                objSerial.Close()
-                objSerial.Dispose()
-            Catch ex As Exception
-            End Try
-            Return retStr
+            objSerial.Close()
+            objSerial.Dispose()
+        Catch ex As Exception
+        End Try
+        Return retStr
     End Function
 
 #End Region
